@@ -25,16 +25,7 @@ function addToLibrary(title, author){
 
 function createDisplay(myLibrary){
 
-    const bodyElement = document.body;
-
-    //body styling
-    bodyElement.style.margin = "0";
-    bodyElement.style.padding = "0";
-    bodyElement.style.display = "flex";
-    bodyElement.style.flexDirection = "column";
-    bodyElement.style.alignItems = "center";
-
-    
+    const bodyElement = document.body;    
     bodyElement.appendChild(displayHeader());
     bodyElement.appendChild(displayLibrary(myLibrary)); 
 
@@ -43,13 +34,18 @@ function createDisplay(myLibrary){
 }
 
 function displayHeader(){
-    //div and styling;
+    
     // creating the form
-    let x = document.createElement("div");
-    x.textContent = "Diego's Library";
-    x.style.backgroundColor = "lightgrey";
+    let container = document.createElement("div");
+    container.classList.add("header");
+    container.textContent = "Diego's Library";
+    
+    let btn = document.createElement("button");
+    btn.textContent = "Add A Book";
+    
+    container.appendChild(btn);
 
-    return(x);
+    return(container);
 
 }
 
@@ -57,11 +53,7 @@ function displayLibrary(myLibrary){
     //div and styling
 
     let container = document.createElement('div');
-    container.style.backgroundColor = "#b5a372"
-    container.style.display = "flex";
-    container.style.flexWrap = "wrap";
-    container.style.gap = "20px";
-    container.style.padding = "20px";
+    container.classList.add("library-container");
 
     myLibrary.forEach(book => {
         container.appendChild(displayBookItem(book)); 
@@ -73,38 +65,40 @@ function displayLibrary(myLibrary){
 function displayBookItem(book){
 
     let card = document.createElement('div');
-    //properties
+    card.classList.add("book-card")
     card.dataset.identifier = book.id;
-    //styling
-    card.style.backgroundColor = "grey";
-    card.style.color = 'white';
-    card.style.border = "2px solid black";
-    card.style.borderRadius = "10px";
-    // card dimensions
-    card.style.width = '200px';
-    card.style.minHeight = '150px';
-
     // text content
-    let textDiv = document.createElement("div");
-    textDiv.textContent = `Title: ${book.title}\nAuthor: ${book.author}`;
-    textDiv.style.whiteSpace = "pre-wrap";
-
-    card.appendChild(textDiv);
+    let title = document.createElement("p");
+    title.textContent = `Title: ${book.title}`;
+    let author = document.createElement("p"); 
+    author.textContent = `Author: ${book.title}`
 
     //add button
     let btn = document.createElement("button");
     btn.textContent = "Remove Book"
     btn.style.marginTop = "10px";
-    card.appendChild(btn);
+    
+    card.appendChild(title);
+    card.appendChild(author);
 
+    card.appendChild(btn);
     return(card);
 
 }
 
-addToLibrary("Harry Potter", "JK Rowling");
-addToLibrary("The Hobbit", "JK Rowling");
-addToLibrary("The Lion, The Witch and the Wardrobe", 
-    author = "CS Lewis"
-);
+
+testLibrary = {
+    books: ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"], 
+    authors: ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9"]
+}
+
+for(i = 0; i < testLibrary.books.length; i++){
+    addToLibrary(
+        testLibrary.books[i], 
+        testLibrary.authors[i]
+    )
+}
+
+
 
 createDisplay(myLibrary);
